@@ -30,16 +30,15 @@ class YandexSpider(Spider):
         else:
             self.chrome_path = './driver/win32_chromedriver.exe'
 
-    # TODO: использовать extractor_pool
     def parse(self):
         if sys.platform == 'linux':
             from pyvirtualdisplay import Display
             display = Display(visible=0, size=(1024, 768))
             display.start()
-            self.extractor_pool(self.browser_exractor, self.start_urls, item=True)
+            self.extractor_pool(self.browser_exractor, self.start_urls)
             display.stop()
         else:
-            self.extractor_pool(self.browser_exractor, self.start_urls, item=True)
+            self.extractor_pool(self.browser_exractor, self.start_urls)
         return None
 
     def browser_exractor(self, url):
@@ -288,10 +287,5 @@ class YandexSpider(Spider):
 
 if __name__ == '__main__':
     spider = YandexSpider()
-    # browser = spider.create_browser()
-    # browser.get('https://realty.yandex.ru/offer/3594958963395990273/')
-    # print(spider.parse_item(browser))
     spider.parse()
-    # print(spider._get_pages_links('https://realty.yandex.ru/sochi/kupit/kvartira/'))
-    # spider.parse_item(browser)
-    # print(spider._get_page_link('https://realty.yandex.ru/sochi/kupit/kvartira/studiya/'))
+

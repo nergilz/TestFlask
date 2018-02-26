@@ -1,16 +1,15 @@
-import re
 import os
 import time
-import requests
-
-from billiard.pool import Pool
 from multiprocessing import cpu_count
 from multiprocessing.util import Finalize
+from random import choice, randint
+
+import requests
+from billiard.pool import Pool
+from lxml import html
+from requests.exceptions import SSLError, ConnectionError
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
-from requests.exceptions import SSLError, ConnectionError
-from lxml import html
-from random import choice, randint
 
 USER_AGENTS = [
     ('Mozilla/5.0 (X11; Linux x86_64) '
