@@ -3,7 +3,9 @@ import os
 import time
 import requests
 
-from multiprocessing import Pool, cpu_count
+from billiard.pool import Pool
+from multiprocessing import cpu_count
+from multiprocessing.util import Finalize
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from requests.exceptions import SSLError, ConnectionError
@@ -154,21 +156,21 @@ class Spider:
         except KeyError:
             return None
 
-    def extractor_pool(self, func, iterable, item=False):
+    def extractor_pool(self, func, iterable):
         '''
-        Extract items (multiprocessing use)
+        Extract items (billard multiprocessing use)
         :param func: function
         :param iterable: list
-        :param item: boolean
-        :return: list
         '''
-        pages_links = list()
-        with Pool(processes=cpu_count()) as pool:
-            if item:
-                pool.map(func, iterable)
-            else:
-                pages_links += pool.map(func, iterable)
-                return pages_links
+        _finalizers = list()
+        p = Pool(processes=cpu_count())
+        _finalizers.append(Finalize(p, p.terminate))
+        try:
+            p.map_async(func, iterable)
+            p.close()
+            p.join()
+        finally:
+            p.terminate()
 
     def create_browser(self):
         '''
