@@ -1,10 +1,10 @@
 import os
 import time
+import requests
+
 from multiprocessing import cpu_count
 from multiprocessing.util import Finalize
 from random import choice, randint
-
-import requests
 from billiard.pool import Pool
 from lxml import html
 from requests.exceptions import SSLError, ConnectionError
