@@ -50,7 +50,6 @@ class YandexSpider(Spider):
         browser = self.create_browser()
         time.sleep(self.DOWNLOAD_DELAY)
         browser.get(url)
-        time.sleep(30)
         tree = html.fromstring(browser.page_source)
         pages_links = tree.xpath('//div[@class="pager__links"]/a/span/text()')
         while 'Следующая' in pages_links:
@@ -102,7 +101,8 @@ class YandexSpider(Spider):
         data_bem = json.loads(data_bem) if data_bem else None
         price = self.extract_with_exception(data_bem['stat']['ecommerce']['load']['detail']['products'][0], 'price')
         price_per_meter = self.extract_first(tree, '//span[@class="offer-card__price-detail"]/text()')
-        price_per_meter = int(price_per_meter.replace(' ', ''))
+        price_per_meter = price_per_meter.replace(' ', '').replace('\xa0', '')
+        price_per_meter = int(re.search('(\d+)', price_per_meter).group(0))
         rooms_square = None
         living_square = self.extract_first(tree, '//div[@class="offer-card__feature offer-card'
                                                  '__feature_name_living-area"]/div/text()')
