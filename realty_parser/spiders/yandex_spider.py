@@ -252,7 +252,8 @@ class YandexSpider(Spider):
             up_date = up_pub_lst[0]
             if 'вчера' in up_date:
                 up_date = str(date.today() - timedelta(days=1))
-            elif ('сегодня' in up_date) or ('часа' in up_date) or ('часов' in up_date) or ('час' in up_date):
+            elif ('сегодня' in up_date) or ('часа' in up_date) or ('часов' in up_date) or ('час' in up_date) or \
+                    ('минуты' in up_date) or ('минуту' in up_date) or ('минут' in up_date):
                 up_date = '%s-%s-%s' % (date.today().year, date.today().month, date.today().day)
             else:
                 up_date = up_date.split(' ')
@@ -264,7 +265,8 @@ class YandexSpider(Spider):
             elif len(pub_date) == 2:
                 pub_date = '%s-%s-%s' % (date.today().year, monhts_dict[pub_date[1]], pub_date[0])
             elif 'размещено' in pub_date:
-                if 'часов' in pub_date:
+                if ('часов' in pub_date) or ('час' in pub_date) or ('минуты' in pub_date) or ('минуту' in pub_date) \
+                        or ('минут' in pub_date):
                     pub_date = '%s-%s-%s' % (date.today().year, date.today().month, date.today().day)
                 else:
                     pub_date = '%s-%s-%s' % (pub_date[3], monhts_dict[pub_date[2]], pub_date[1])
@@ -273,7 +275,8 @@ class YandexSpider(Spider):
                 pub_date = up_pub_lst[1] if len(up_pub_lst) == 2 else up_pub_lst[0].replace('Объявление размещено ', '')
                 pub_date = pub_date.split(' ')
                 if len(pub_date) == 3:
-                    if ('сегодня' in pub_date) or ('часа' in pub_date) or ('часов' in pub_date) or ('час' in pub_date):
+                    if ('сегодня' in pub_date) or ('часа' in pub_date) or ('часов' in pub_date) or ('час' in pub_date) \
+                            or ('минуту' in pub_date) or ('минуты' in pub_date):
                         pub_date = '%s-%s-%s' % (date.today().year, date.today().month, date.today().day)
                     else:
                         pub_date = '%s-%s-%s' % (pub_date[2], monhts_dict[pub_date[1]], pub_date[0])
@@ -288,4 +291,3 @@ class YandexSpider(Spider):
 if __name__ == '__main__':
     spider = YandexSpider()
     spider.parse()
-

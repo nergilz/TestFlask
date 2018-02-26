@@ -9,5 +9,5 @@ from realty_parser.spiders.cian_spider import CianSpider
 
 @app.route('/')
 def index():
-    task = start_parsing.delay('cian')
+    task = start_parsing.delay('yandex')
     return render_template(template_name_or_list='index.html', task_id=task.id, status=task.status)
