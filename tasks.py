@@ -1,10 +1,8 @@
-import time
-
 from app import celery
 
-from realty_parser_req.terrarium.avito_spider import AvitoSpider
-from realty_parser_req.terrarium.cian_spider import CianSpider
-from realty_parser_req.terrarium.yandex_spider import YandexSpider
+from realty_parser.spiders.avito_spider import AvitoSpider
+from realty_parser.spiders.cian_spider import CianSpider
+from realty_parser.spiders.yandex_spider import YandexSpider
 
 
 @celery.task()

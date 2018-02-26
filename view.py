@@ -3,8 +3,8 @@ from flask import render_template
 
 from tasks import hello, start_parsing
 
-from realty_parser_req.realty_peeewee import ItemsDB
-from realty_parser_req.terrarium.cian_spider import CianSpider
+from realty_parser.models import ItemsDB
+from realty_parser.spiders.cian_spider import CianSpider
 
 
 @app.route('/')

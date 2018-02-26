@@ -7,8 +7,8 @@ from random import randint
 
 from lxml import html
 
-from realty_parser_req.realty_peeewee import ItemsDB
-from realty_parser_req.terrarium.spider import Spider
+from realty_parser.models import ItemsDB
+from realty_parser.spiders.spider import Spider
 
 
 class YandexSpider(Spider):
