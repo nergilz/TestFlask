@@ -1,11 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Index</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block content %}
     <p>Hello World</p>
-    <p>Task {{ task_id }}  is {{ status }}</p>
-</body>
-</html>
+    <a href="url_for()">Admin page</a>
+{#    <p>Task {{ task_id }}  is {{ status }}</p>#}
+{% endblock %}
