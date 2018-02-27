@@ -3,6 +3,7 @@ from flask import render_template
 
 from realty_parser.models import ItemsDB
 
+
 @app.route('/')
 def index():
     database = ItemsDB()
