@@ -83,7 +83,6 @@ class AvitoSpider(Spider):
         browser.close()
         return True
 
-    # TODO: использовать extract_with_exception, extract_from_xpath
     def parse_item(self, browser):
         '''
         Parse realty URL
@@ -225,7 +224,8 @@ class AvitoSpider(Spider):
             url = 'https://www.avito.ru' + \
                   tree.xpath(self.before_google_ads_items_xhs +
                              '[%s]//a[@class="item-description-title-link"]/@href' % (num_ad))[0]
-            payments = tree.xpath(self.before_google_ads_items_xhs + '[%s]//div[@class="vas-applied"]/a/@title' % (num_ad))
+            payments = tree.xpath(
+                self.before_google_ads_items_xhs + '[%s]//div[@class="vas-applied"]/a/@title' % (num_ad))
             for item in payments:
                 if 'сегодня' in item:
                     item_data = payments.pop(payments.index(item))
@@ -242,7 +242,8 @@ class AvitoSpider(Spider):
             url = 'https://www.avito.ru' + \
                   tree.xpath(self.after_google_ads_items_xhs +
                              '[%s]//a[@class="item-description-title-link"]/@href' % (num_ad))[0]
-            payments = tree.xpath(self.after_google_ads_items_xhs + '[%s]//div[@class="vas-applied"]/a/@title' % (num_ad))
+            payments = tree.xpath(
+                self.after_google_ads_items_xhs + '[%s]//div[@class="vas-applied"]/a/@title' % (num_ad))
             for item in payments:
                 if 'сегодня' in item:
                     item_data = payments.pop(payments.index(item))
@@ -361,7 +362,3 @@ class AvitoSpider(Spider):
 if __name__ == '__main__':
     spider = AvitoSpider()
     spider.parse()
-    # spider.browser_exractor('https://www.avito.ru/sochi/kvartiry/prodam')
-    # spider._get_items_links('https://www.avito.ru/sochi/kvartiry/prodam')
-    # spider.parse_item('https://www.avito.ru/sochi/kvartiry/1-k_kvartira_29_m_24_et._1213229919')
-    # print(spider._get_phone_publish_date('https://www.avito.ru/sochi/kvartiry/1-k_kvartira_27.6_m_44_et._1081765938'))
