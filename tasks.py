@@ -1,3 +1,5 @@
+import time
+
 from app import celery
 
 from realty_parser.spiders.avito_spider import AvitoSpider
@@ -16,9 +18,9 @@ def start_parsing(site):
     elif site == 'yandex':
         yandex_spider = YandexSpider()
         yandex_spider.parse()
-    return True
 
 
 @celery.task()
 def hello(text):
+    time.sleep(3)
     return 'Hello %s' % (text)
