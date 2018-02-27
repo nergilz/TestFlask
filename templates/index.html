@@ -1,6 +1,23 @@
 {% extends 'base.html' %}
 {% block content %}
-    <p>Hello World</p>
-    <a href="url_for()">Admin page</a>
-{#    <p>Task {{ task_id }}  is {{ status }}</p>#}
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Url</th>
+            <th scope="col">Views</th>
+            <th scope="col">AD text</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for record in records %}
+            <tr>
+                <th scope="row">{{ record.id }}</th>
+                <td>{{ record.url }}</td>
+                <td>{{ record.views }}</td>
+                <td>{{ record.ad_text }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
 {% endblock %}
