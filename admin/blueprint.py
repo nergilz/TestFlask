@@ -13,12 +13,12 @@ def index():
 
 @admin.route('/run-task/<site>', methods=['GET'])
 def run_task(site):
-    task = tasks.hello.delay(site)
+    task = tasks.start_parsing.delay(site)
     return jsonify(task_id=task.id, task_status=task.state)
 
 
 @admin.route('/task-status/<id>')
 def check_staus(id):
-    task = tasks.hello.AsyncResult(id)
+    task = tasks.start_parsing.AsyncResult(id)
     responce = {'status': task.state, 'result': task.result}
     return jsonify(responce)
