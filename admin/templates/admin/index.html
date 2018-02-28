@@ -5,23 +5,17 @@
         <div class="input-group">
             <select class="custom-select" id="inputGroupSelect">
                 <option selected>Choose...</option>
-                <option value="1">Avito</option>
-                <option value="2">Cian</option>
-                <option value="3">Yandex</option>
+                <option value="avito">Avito</option>
+                <option value="cian">Cian</option>
+                <option value="yandex">Yandex</option>
             </select>
             <div class="input-group-append">
                 <button class="btn btn-outline-secondary" type="button" onclick="sendStartTaskData()">Run</button>
             </div>
         </div>
+    <div  class="progress-bar-custom" id="#progress-bar-div"></div>
     </div>
 
  <!--My JS Script -->
 <script src="{{ url_for('static', filename='js/page.js') }}"></script>
-
-    {#    <div class="progress">#}
-    {#        <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="100" aria-valuemin="0"#}
-    {#             aria-valuemax="100" style="width: 100%">#}
-    {#            <span>Please wait<span class="dotdotdot"></span></span>#}
-    {#        </div>#}
-    {#    </div>#}
 {% endblock %}

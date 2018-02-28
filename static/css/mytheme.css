@@ -31,3 +31,8 @@
     position: center;
     width: 20%;
 }
+
+.progress-bar-custom{
+    position: center;
+    width: 400px;
+}
