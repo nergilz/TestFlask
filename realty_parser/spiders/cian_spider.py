@@ -29,12 +29,6 @@ class CianSpider(Spider):
         super().__init__()
         self.database = ItemsDB()
         self.database.create_db()
-        if sys.platform == 'linux':
-            self.chrome_path = './driver/linux64_chromedriver'
-        elif sys.platform == 'darwin':
-            self.chrome_path = './driver/mac_chromedriver'
-        else:
-            self.chrome_path = './driver/win32_chromedriver.exe'
 
     def parse(self):
         '''
@@ -52,7 +46,7 @@ class CianSpider(Spider):
         return None
 
     def browser_exractor(self, url):
-        #TODO не парсит последнюю страницу
+        # TODO не парсит последнюю страницу
         '''
         Follow by links and extract ad data
         :param url: str

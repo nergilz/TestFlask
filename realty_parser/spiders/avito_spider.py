@@ -28,12 +28,6 @@ class AvitoSpider(Spider):
         self.database = ItemsDB()
         self.database.create_db()
         self.payments_data = list()
-        if sys.platform == 'linux':
-            self.chrome_path = './driver/linux64_chromedriver'
-        elif sys.platform == 'darwin':
-            self.chrome_path = './driver/mac_chromedriver'
-        else:
-            self.chrome_path = './driver/win32_chromedriver.exe'
 
     def parse(self):
         '''
