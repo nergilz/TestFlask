@@ -22,5 +22,5 @@ def start_parsing(site):
 
 @celery.task()
 def hello(text):
-    time.sleep(3)
+    time.sleep(5)
     return 'Hello %s' % (text)

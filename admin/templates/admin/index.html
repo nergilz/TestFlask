@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
     <h1>Admin Page</h1>
-    <div class="select-input">
+    <div class="select-input" id="#select-input">
         <div class="input-group">
             <select class="custom-select" id="inputGroupSelect">
                 <option selected>Choose...</option>
@@ -13,9 +13,6 @@
                 <button class="btn btn-outline-secondary" type="button" onclick="sendStartTaskData()">Run</button>
             </div>
         </div>
-    <div  class="progress-bar-custom" id="#progress-bar-div"></div>
+        <div class="progress-bar-custom" id="#progress-bar-div"></div>
     </div>
-
- <!--My JS Script -->
-<script src="{{ url_for('static', filename='js/page.js') }}"></script>
 {% endblock %}
