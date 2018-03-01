@@ -44,7 +44,7 @@ function checkStatus(task_id, value) {
                     console.log(response);
                     if (response.result != null) {
                         clearInterval(intervalID);
-                        removeTaskProgressBar(value);
+                        removeElement('#progress-bar-' + value);
                         unlockOption(value);
                     }
                 }
@@ -54,8 +54,8 @@ function checkStatus(task_id, value) {
 }
 
 
-function removeTaskProgressBar(value) {
-    var progressbar = document.getElementById('#progress-bar-' + value);
+function removeElement(elementID) {
+    var progressbar = document.getElementById(elementID);
     progressbar.parentNode.removeChild(progressbar);
 }
 
