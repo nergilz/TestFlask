@@ -1,0 +1,23 @@
+version: '3'
+services:
+  web:
+    volumes:
+      - ./:/code
+    build:
+      .
+    expose:
+      - 5000
+    links:
+      - mysql
+      - redis
+  redis:
+    image: "redis:latest"
+    ports:
+     - "6379:32768"
+  mysql:
+    image: "mysql:latest"
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=oruri448
+      - MYSQL_DATABASE=realty
