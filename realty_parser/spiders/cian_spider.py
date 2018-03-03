@@ -35,14 +35,14 @@ class CianSpider(Spider):
         Main parse method
         :return: None
         '''
-        if sys.platform == 'linux':
-            from pyvirtualdisplay import Display
-            display = Display(visible=0, size=(1024, 768))
-            display.start()
-            self.extractor_pool(func=self.browser_exractor, iterable=self.start_urls)
-            display.stop()
-        else:
-            self.extractor_pool(func=self.browser_exractor, iterable=self.start_urls)
+        # if sys.platform == 'linux':
+        #     from pyvirtualdisplay import Display
+        #     display = Display(visible=0, size=(1024, 768))
+        #     display.start()
+        #     self.extractor_pool(func=self.browser_exractor, iterable=self.start_urls)
+        #     display.stop()
+        # else:
+        self.extractor_pool(func=self.browser_exractor, iterable=self.start_urls)
         return None
 
     def browser_exractor(self, url):
@@ -381,3 +381,4 @@ class CianSpider(Spider):
 if __name__ == '__main__':
     spider = CianSpider()
     spider.parse()
+
