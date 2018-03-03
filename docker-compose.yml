@@ -21,6 +21,7 @@ services:
       - mysql
       - redis
       - celery
+      - selenium-hub
   redis:
     container_name: Redis
     image: redis:latest
@@ -55,3 +56,25 @@ services:
       - CELERY_RESULT_SERIALIZER=json
       - CELERY_APP=tasks
     command: celery -A tasks worker -l info
+  selenium-hub:
+    container_name: selenium-hub
+    image: selenium/hub
+    ports:
+      - 4444:4444
+    expose:
+      - 4444
+  chrome-node:
+    container_name: chrome-node
+    image: selenium/node-chrome
+    environment:
+      - HUB_PORT_4444_TCP_ADDR=selenium-hub
+      - HUB_PORT_4444_TCP_PORT=4444
+      - REGISTER=TRUE
+    links:
+      - selenium-hub:hub
+    expose:
+      - 5555
+    volumes:
+    - /dev/shm:/dev/shm
+    depends_on:
+      - selenium-hub

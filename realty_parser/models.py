@@ -3,7 +3,7 @@ from peewee import (MySQLDatabase, Model, IntegerField, CharField, DateField, Te
 
 db = MySQLDatabase(database='realty',
                    user='root',
-                   password='oruri448', threadlocals=True, host='mysql', port=3306)
+                   password='oruri448', threadlocals=True)
 
 
 class CianModel(Model):
