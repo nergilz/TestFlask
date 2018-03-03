@@ -11,6 +11,7 @@ from lxml import html
 from requests.exceptions import SSLError, ConnectionError
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 
 USER_AGENTS = [
     ('Mozilla/5.0 (X11; Linux x86_64) '
@@ -38,6 +39,7 @@ class Spider:
     def __init__(self):
         self.proxy_list = list()
         # self.proxy_list = self.get_proxy_list()
+        self.chrome_options = webdriver.ChromeOptions()
         if sys.platform == 'linux':
             self.chrome_path = os.path.abspath(
                 os.path.join(os.path.dirname(__file__), '../../driver/linux64_chromedriver')
@@ -188,14 +190,15 @@ class Spider:
         Create Chrome browser
         :return: object Selenium browser
         '''
-        self.chrome_options = webdriver.ChromeOptions()
         # proxy = choice(self.proxy_list)
         # need fast proxies
         # print('Browser use proxy: %s' % (proxy))
         # self.chrome_options.add_argument('--proxy-server=%s' % (proxy))
         # self.chrome_options.add_argument('--headless --disable-gpu --proxy-server=%s' % (proxy))
         # self.chrome_options.add_argument('--headless --disable-gpu')
-        browser = webdriver.Chrome(executable_path=self.chrome_path, chrome_options=self.chrome_options)
+        # browser = webdriver.Chrome(executable_path=self.chrome_path, chrome_options=self.chrome_options)
+        browser = webdriver.Remote(command_executor='http://selenium-hub:4444/wd/hub',
+                                   desired_capabilities=DesiredCapabilities.CHROME)
         return browser
 
     def extract_first(self, tree, xpath):
