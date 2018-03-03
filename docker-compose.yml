@@ -1,5 +1,6 @@
 version: '3'
 services:
+
   web:
     container_name: Flask
     volumes:
@@ -17,11 +18,14 @@ services:
       - mysql
       - redis
       - celery
+      - selenium-hub
     depends_on:
       - mysql
       - redis
       - celery
       - selenium-hub
+
+
   redis:
     container_name: Redis
     image: redis:latest
@@ -29,6 +33,8 @@ services:
      - 6379:6379
     expose:
       - 6379
+
+
   mysql:
     container_name: MySQL
     image: mysql:latest
@@ -40,6 +46,8 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=oruri448
       - MYSQL_DATABASE=realty
+
+
   celery:
     container_name: Celery
     volumes:
@@ -55,7 +63,15 @@ services:
       - CELERY_TASK_SERIALIZER=json
       - CELERY_RESULT_SERIALIZER=json
       - CELERY_APP=tasks
+    links:
+      - mysql
+      - selenium-hub
+    depends_on:
+      - mysql
+      - selenium-hub
     command: celery -A tasks worker -l info
+
+
   selenium-hub:
     container_name: selenium-hub
     image: selenium/hub
@@ -63,6 +79,8 @@ services:
       - 4444:4444
     expose:
       - 4444
+
+
   chrome-node:
     container_name: chrome-node
     image: selenium/node-chrome
