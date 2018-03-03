@@ -24,6 +24,7 @@ services:
       - redis
       - celery
       - selenium-hub
+    command: python -u /project/main.py
 
 
   redis:
