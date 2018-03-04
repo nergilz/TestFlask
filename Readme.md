@@ -9,8 +9,7 @@ Flask site which scrape data from sites cian.ru yandex.ru avito.ru
     docker-compose up
 ```
 
-For MacOS and Linux http://localhost:5000
-For Windows http://192.168.99.100:5000
+For MacOS and Linux http://localhost:5000 for Windows http://192.168.99.100:5000
 
 
 ### Prerequisites
