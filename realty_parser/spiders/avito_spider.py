@@ -1,8 +1,8 @@
-import base64
 import os
 import re
 import sys
 import time
+import base64
 from datetime import date, timedelta
 from random import randint
 
@@ -34,14 +34,7 @@ class AvitoSpider(Spider):
         Main parse method
         :return: None
         '''
-        if sys.platform == 'linux':
-            from pyvirtualdisplay import Display
-            display = Display(visible=0, size=(1024, 768))
-            display.start()
-            self.extractor_pool(self.browser_exractor, self.start_urls)
-            display.stop()
-        else:
-            self.extractor_pool(self.browser_exractor, self.start_urls)
+        self.extractor_pool(self.browser_exractor, self.start_urls)
         return None
 
     def browser_exractor(self, url):
@@ -159,45 +152,6 @@ class AvitoSpider(Spider):
         print(kwargs)
         return kwargs
 
-    def _get_pagination_links(self, url):
-        '''
-        Extract pagination links
-        :param url: str
-        :return: list
-        '''
-        pagination_links = list()
-        pagination_links.append(url)
-        domain_adress = 'https://www.avito.ru'
-        request = self.get_html(url)
-        tree = html.fromstring(request.content)
-        next_link = tree.xpath('//a[@class="pagination-page"]/@href')[0]
-        last_link = tree.xpath('//a[@class="pagination-page"]/@href')[-1]
-        num_pages = int(re.search(r'p=(\d+)', last_link).group(0).replace('p=', ''))
-        for page in range(2, num_pages + 1):
-            page_prefix = re.search(r'p=(\d+)', next_link).group(0)
-            link = next_link.replace(page_prefix, 'p=%s' % (page))
-            pagination_links.append(domain_adress + link)
-        return pagination_links
-
-    def _get_items_links(self, url):
-        '''
-        Extract items links
-        :param url: str
-        :return: list
-        '''
-        payments = list()
-        domain_adress = 'https://www.avito.ru'
-        time.sleep(self.DOWNLOAD_DELAY)
-        request = self.get_html(url)
-        tree = html.fromstring(request.content)
-        items_links = tree.xpath('//a[@class="item-description-title-link"]/@href')
-        items_links = [domain_adress + item_link for item_link in items_links]
-        for item in items_links:
-            if 'redirect' in item:
-                items_links.remove(item)
-        payments.append(self._get_ad_payments(tree))
-        return items_links, payments
-
     def _get_ad_payments(self, tree):
         '''
         Extract payments from ad's
@@ -249,22 +203,6 @@ class AvitoSpider(Spider):
                     payments.append(item_data.replace('вчера', yesterday_date))
             res.append({'url': url, 'payments': payments})
         return res
-
-    def _prettify_items_data(self, item_data):
-        '''
-        Nomalize data structure
-        :param item_data: list
-        :return: tuple
-        '''
-        item_links = list()
-        payment_list = list()
-        for item in item_data:
-            item_links.append(item[0])
-            for payment_item in item[1]:
-                for payment in payment_item:
-                    payment_list.append(payment)
-        item_links = self.prettify_result(item_links)
-        return item_links, payment_list
 
     def _get_item_props(self, tree):
         '''
