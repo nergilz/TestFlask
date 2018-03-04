@@ -11,6 +11,7 @@ MarkupSafe==1.0
 peewee==2.10.2
 Pillow==5.0.0
 PyMySQL==0.7.11
+redis==2.10.6
 pytesseract==0.2.0
 pytz==2018.3
 selenium==3.9.0
