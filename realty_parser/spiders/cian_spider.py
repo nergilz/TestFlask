@@ -1,5 +1,4 @@
 import re
-import sys
 import time
 from datetime import datetime, date, timedelta
 from random import randint
@@ -35,18 +34,10 @@ class CianSpider(Spider):
         Main parse method
         :return: None
         '''
-        # if sys.platform == 'linux':
-        #     from pyvirtualdisplay import Display
-        #     display = Display(visible=0, size=(1024, 768))
-        #     display.start()
-        #     self.extractor_pool(func=self.browser_exractor, iterable=self.start_urls)
-        #     display.stop()
-        # else:
         self.extractor_pool(func=self.browser_exractor, iterable=self.start_urls)
         return None
 
     def browser_exractor(self, url):
-        # TODO не парсит последнюю страницу
         '''
         Follow by links and extract ad data
         :param url: str
@@ -263,41 +254,6 @@ class CianSpider(Spider):
         print(kwargs)
         return kwargs
 
-    def _get_item_links(self, url):
-        '''
-        Extract links of items from URL
-        :param url: str
-        :return: list
-        '''
-        links = list()
-        request = self.get_html(url)
-        tree = html.fromstring(request.content)
-        links += tree.xpath('//*[@class="address--2P1T2"]/a/@href')
-        return links
-
-    def _get_page_link(self, url):
-        '''
-        Extract page link from pagination
-        :param url:
-        :return:
-        '''
-        request = self.get_html(url)
-        tree = html.fromstring(request.content)
-        num_pages = tree.xpath('//*[@class="list--35Suf"]/li/a/text()')
-        pages_links = tree.xpath('//*[@class="list--35Suf"]/li/a/@href')
-        pages_links = ['https://sochi.cian.ru/cat.php?' + item for item in pages_links if 'sochi.cian.ru' not in item]
-        while '..' == num_pages[-1]:
-            time.sleep(self.DOWNLOAD_DELAY)
-            request = self.get_html(pages_links[-1])
-            tree = html.fromstring(request.content)
-            num_pages = tree.xpath('//*[@class="list--35Suf"]/li/a/text()')
-            new_links = tree.xpath('//*[@class="list--35Suf"]/li/a/@href')
-            new_links = ['https://sochi.cian.ru/cat.php?' + item for item in new_links if 'sochi.cian.ru' not in item]
-            for link in new_links:
-                if link not in pages_links:
-                    pages_links.append(link)
-        return pages_links
-
     def _get_object_desc_props(self, selector):
         '''
         Parse object description properties
@@ -381,4 +337,3 @@ class CianSpider(Spider):
 if __name__ == '__main__':
     spider = CianSpider()
     spider.parse()
-
