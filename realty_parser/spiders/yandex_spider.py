@@ -1,6 +1,5 @@
 import json
 import re
-import sys
 import time
 from datetime import date, timedelta
 from random import randint
@@ -25,14 +24,7 @@ class YandexSpider(Spider):
         self.payments_data = list()
 
     def parse(self):
-        if sys.platform == 'linux':
-            from pyvirtualdisplay import Display
-            display = Display(visible=0, size=(1024, 768))
-            display.start()
-            self.extractor_pool(self.browser_exractor, self.start_urls)
-            display.stop()
-        else:
-            self.extractor_pool(self.browser_exractor, self.start_urls)
+        self.extractor_pool(self.browser_exractor, self.start_urls)
         return None
 
     def browser_exractor(self, url):
@@ -67,7 +59,6 @@ class YandexSpider(Spider):
         browser.close()
         return True
 
-    # TODO: Доделать парсинг карточки
     def parse_item(self, browser):
         '''
         Parse realty URL
