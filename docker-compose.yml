@@ -94,6 +94,8 @@ services:
       - selenium-hub:hub
     expose:
       - 5555
+    ports:
+     - 5555:5555
     volumes:
     - /dev/shm:/dev/shm
     depends_on:
